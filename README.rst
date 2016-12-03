@@ -20,13 +20,21 @@ Usage
 .. code-block:: python
 
         from geotext import GeoText
-        
-        places = GeoText("London is a great city")
+
+        geo_text = GeoText()
+        places = geo_text.read('London is a great city')
         places.cities
         # "London"
-        
-        GeoText('New York, Texas, and also China').country_mentions
+
+        GeoText().read('New York, Texas, and also China').country_mentions
         # OrderedDict([(u'US', 2), (u'CN', 1)])
+
+        GeoText().read('Voronezh and New York').country_mentions
+        # OrderedDict([(u'RU', 1), (u'US', 1)])
+
+        # Take only large cities into account
+        GeoText(min_population=1000000).read('Voronezh and New York').country_mentions
+        # OrderedDict([(u'US', 1)])
 
 Features
 --------
