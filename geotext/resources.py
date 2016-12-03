@@ -1,0 +1,100 @@
+# -*- coding: utf-8 -*-
+import os
+
+_ROOT = os.path.abspath(os.path.dirname(__file__))
+
+
+def get_data_path(path):
+    return os.path.join(_ROOT, 'data', path)
+
+
+COUNTRIES_FILE = get_data_path('countryInfo.txt')
+CITIES_FILE = get_data_path('cities15000.txt')
+CITIES_PATCH_FILE = get_data_path('citypatches.txt')
+NATIONALITIES_FILE = get_data_path('nationalities.txt')
+
+
+def _read_data_file(
+    filename, usecols=(0, 1), sep='\t', comment='#', encoding='utf-8', skip=0,
+    filter_method=None
+):
+    """
+    Parse data files from the data directory
+
+    Data files are provided by GeoNames service: http://www.geonames.org/
+    Files format defined in GeoNames readme file:
+    http://download.geonames.org/export/dump/readme.txt
+
+    Parameters
+    ----------
+    filename: string
+        Full path to file
+
+    usecols: list, default [0, 1]
+        A list of two elements representing the columns to be parsed into a
+        dictionary.
+        The first element will be used as keys and the second as values.
+        Defaults to the first two columns of `filename`.
+
+    sep : string, default '\t'
+        Field delimiter.
+
+    comment : str, default '#'
+        Indicates remainder of line should not be parsed. If found at the
+        beginning of a line, the line will be ignored altogether. This
+        parameter must be a single character.
+
+    encoding : string, default 'utf-8'
+        Encoding to use for UTF when reading/writing (ex. `utf-8`)
+
+    skip: int, default 0
+        Number of lines to skip at the beginning of the file
+
+    filter_method: method, default None
+        Only lines that pass this filter are used
+        Method receives one param: line split by defined separator into a list
+
+    Returns
+    -------
+    A dictionary with the same length as the number of lines in `filename`
+    """
+
+    with open(filename, 'rb') as f:
+        # skip initial lines
+        for _ in range(skip):
+            next(f)
+
+        # filter comment lines
+        lines = (line for line in f if not line.startswith(comment))
+
+        d = dict()
+        for line in lines:
+            columns = line.split(sep)
+            if filter_method and not filter_method(columns):
+                continue
+            key = columns[usecols[0]].decode(encoding).lower()
+            value = columns[usecols[1]].decode(encoding).rstrip('\n')
+            d[key] = value
+    return d
+
+
+def get_nationalities_data():
+    return _read_data_file(NATIONALITIES_FILE, sep=':')
+
+
+def get_countries_data():
+    return _read_data_file(COUNTRIES_FILE, usecols=[4, 0], skip=1)
+
+
+def get_cities_data(min_population=0):
+    # Field 14 is population, see
+    # http://download.geonames.org/export/dump/readme.txt
+    # for reference
+    cities = _read_data_file(
+        CITIES_FILE, usecols=[1, 8],
+        filter_method=lambda fields: int(fields[14]) > min_population
+    )
+    # apply city patches
+    city_patches = _read_data_file(CITIES_PATCH_FILE)
+    cities.update(city_patches)
+    return cities

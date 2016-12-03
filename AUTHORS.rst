@@ -2,12 +2,12 @@
 Credits
 =======
 
-Development Lead
-----------------
+Original Project By
+-------------------
 
 * Yaser Martinez Palenzuela <yaser.martinez@gmail.com>
 
 Contributors
 ------------
 
-None yet. Why not be the first?
+* Denis Kovalev <aikikode@gmail.com>

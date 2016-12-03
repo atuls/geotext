@@ -16,26 +16,23 @@ requirements = [
 ]
 
 test_requirements = [
-    # TODO: put package test requirements here
+    'pytest',
 ]
 
 setup(
     name='geotext',
     version='0.1.0',
-    description='Geotext extracts countriy and city mentions from text',
+    description='Geotext extracts country and city mentions from text',
     long_description=readme + '\n\n' + history,
-    author='Yaser Martinez Palenzuela',
-    author_email='yaser.martinez@gmail.com',
-    url='https://github.com/elyase/geotext',
+    author='Denis Kovalev (fork from Yaser Martinez Palenzuela version)',
+    author_email='aikikode@gmail.com',
+    url='https://github.com/aikikode/geotext',
     packages=[
         'geotext',
     ],
-    package_dir={'geotext':
-                 'geotext'},
+    package_dir={'geotext': 'geotext', },
     include_package_data=True,
-    package_data={
-      'geotext': ['geotext/data/*.txt'],
-   },
+    package_data={'geotext': ['geotext/data/*.txt', ], },
     install_requires=requirements,
     license="MIT",
     zip_safe=False,

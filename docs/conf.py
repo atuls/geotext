@@ -56,7 +56,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'geotext'
-copyright = u'2014, Yaser Martinez Palenzuela'
+copyright = u'2016, Denis Kovalev'
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -210,7 +210,7 @@ latex_elements = {
 latex_documents = [
     ('index', 'geotext.tex',
      u'geotext Documentation',
-     u'Yaser Martinez Palenzuela', 'manual'),
+     u'Denis Kovalev', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at
@@ -241,7 +241,7 @@ latex_documents = [
 man_pages = [
     ('index', 'geotext',
      u'geotext Documentation',
-     [u'Yaser Martinez Palenzuela'], 1)
+     [u'Denis Kovalev'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -256,7 +256,7 @@ man_pages = [
 texinfo_documents = [
     ('index', 'geotext',
      u'geotext Documentation',
-     u'Yaser Martinez Palenzuela',
+     u'Denis Kovalev',
      'geotext',
      'One line description of project.',
      'Miscellaneous'),
