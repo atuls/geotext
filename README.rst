@@ -2,14 +2,6 @@
 geotext
 ===============================
 
-
-.. image:: https://travis-ci.org/elyase/geotext.png?branch=master
-        :target: https://travis-ci.org/elyase/geotext
-
-.. image:: https://pypip.in/d/geotext/badge.png
-        :target: https://pypi.python.org/pypi/geotext
-
-
 Geotext extracts country and city mentions from text
 
 * Free software: MIT license
@@ -22,8 +14,8 @@ Usage
         from geotext import GeoText
 
         geo_text = GeoText()
-        places = geo_text.read('London is a great city')
-        places.cities
+        geo_text.read('London is a great city')
+        geo_text.cities
         # "London"
 
         GeoText().read('New York, Texas, and also China').country_mentions
@@ -33,7 +25,7 @@ Usage
         # OrderedDict([(u'RU', 1), (u'US', 1)])
 
         # Take only large cities into account
-        GeoText(min_population=1000000).read('Voronezh and New York').country_mentions
+        GeoText().set_population_limit(1000000).read('Voronezh and New York').country_mentions
         # OrderedDict([(u'US', 1)])
 
 Features

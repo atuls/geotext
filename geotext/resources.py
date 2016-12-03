@@ -15,7 +15,7 @@ NATIONALITIES_FILE = get_data_path('nationalities.txt')
 
 
 def _read_data_file(
-    filename, usecols=(0, 1), sep='\t', comment='#', encoding='utf-8', skip=0,
+    filename, usecols=(0, 1), sep='\t', comment='#', encoding='utf-8',
     filter_method=None
 ):
     """
@@ -47,9 +47,6 @@ def _read_data_file(
     encoding : string, default 'utf-8'
         Encoding to use for UTF when reading/writing (ex. `utf-8`)
 
-    skip: int, default 0
-        Number of lines to skip at the beginning of the file
-
     filter_method: method, default None
         Only lines that pass this filter are used
         Method receives one param: line split by defined separator into a list
@@ -60,10 +57,6 @@ def _read_data_file(
     """
 
     with open(filename, 'rb') as f:
-        # skip initial lines
-        for _ in range(skip):
-            next(f)
-
         # filter comment lines
         lines = (line for line in f if not line.startswith(comment))
 
@@ -83,7 +76,7 @@ def get_nationalities_data():
 
 
 def get_countries_data():
-    return _read_data_file(COUNTRIES_FILE, usecols=[4, 0], skip=1)
+    return _read_data_file(COUNTRIES_FILE, usecols=[4, 0])
 
 
 def get_cities_data(min_population=0):
@@ -98,3 +91,13 @@ def get_cities_data(min_population=0):
     city_patches = _read_data_file(CITIES_PATCH_FILE)
     cities.update(city_patches)
     return cities
+
+
+def get_words_counts(phrases_list):
+    """
+    Set of phrases lengths
+    e.g.
+    get_words_count(['hello', 'hi']) -> {1,}
+    get_words_count(['hello', 'hi', 'hello, world and all']) -> {1, 3}
+    """
+    return set(map(len, map(lambda phrase: phrase.split(), phrases_list)))
