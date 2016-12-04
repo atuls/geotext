@@ -24,7 +24,7 @@ class GeoText(object):
     >>> GeoText().read('New York, Texas, and also China').country_mentions
     OrderedDict([(u'US', 2), (u'CN', 1)])
     """
-    LOCATION_REGEX = r"[A-Z]+[a-z]*(?:[ '-][A-Z]+[a-z]*)*\w+"
+    LOCATION_REGEX = r"[A-Z]+[a-z]*(?:[ '-][A-Z]+[a-z]*)*"
     Index = namedtuple('Index', 'nationalities cities countries')
 
     def __init__(self):
@@ -101,11 +101,21 @@ class GeoText(object):
             each for each in candidates
             if each.lower() in self._index.countries
         ]
-        self.cities = [
+        cities = [
             each for each in candidates
             if each.lower() in self._index.cities
             and each.lower() not in self._index.countries
         ]
+        # Iterate over a copy because we'll modify this list
+        for city in cities[:]:
+            # Check whether it's a substring of other cities
+            other_cities = cities[:]
+            other_cities.remove(city)
+            for other_city in other_cities:
+                if re.findall(r'\b{}\b'.format(city), other_city):
+                    cities.remove(city)
+                    break
+        self.cities = cities
         self.nationalities = [
             each for each in candidates
             if each.lower() in self._index.nationalities

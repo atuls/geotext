@@ -5,7 +5,6 @@ geotext
 Geotext extracts country and city mentions from text
 
 * Free software: MIT license
-* Documentation: https://geotext.readthedocs.org.
 
 Usage
 -----

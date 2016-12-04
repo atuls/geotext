@@ -16,7 +16,7 @@ NATIONALITIES_FILE = get_data_path('nationalities.txt')
 
 def _read_data_file(
     filename, usecols=(0, 1), sep='\t', comment='#', encoding='utf-8',
-    filter_method=None
+    population_field_num=None, filter_method=None
 ):
     """
     Parse data files from the data directory
@@ -47,6 +47,12 @@ def _read_data_file(
     encoding : string, default 'utf-8'
         Encoding to use for UTF when reading/writing (ex. `utf-8`)
 
+    population_field_num : int, default None
+        If set: this should define the field with location population count to
+        use for conflicts resolution: if there're several locations with same
+        name, the one with larger population will be taken.
+        If set to None, only the last one will be taken.
+
     filter_method: method, default None
         Only lines that pass this filter are used
         Method receives one param: line split by defined separator into a list
@@ -61,12 +67,25 @@ def _read_data_file(
         lines = (line for line in f if not line.startswith(comment))
 
         d = dict()
+        location_population = dict()
         for line in lines:
             columns = line.split(sep)
             if filter_method and not filter_method(columns):
                 continue
             key = columns[usecols[0]].decode(encoding).lower()
+            # 'London City' -> 'London'
+            suffix_to_remove = ' city'
+            if key.endswith(suffix_to_remove):
+                key = key[:-len(suffix_to_remove)]
+
             value = columns[usecols[1]].decode(encoding).rstrip('\n')
+            if population_field_num is not None:
+                population = int(
+                    columns[population_field_num].decode(encoding)
+                )
+                if key in d and location_population[key] > population:
+                    continue
+                location_population[key] = population
             d[key] = value
     return d
 
@@ -85,11 +104,9 @@ def get_cities_data(min_population=0):
     # for reference
     cities = _read_data_file(
         CITIES_FILE, usecols=[1, 8],
+        population_field_num=14,
         filter_method=lambda fields: int(fields[14]) > min_population
     )
-    # apply city patches
-    city_patches = _read_data_file(CITIES_PATCH_FILE)
-    cities.update(city_patches)
     return cities
 
 
