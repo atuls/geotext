@@ -35,7 +35,7 @@ lint:
 	flake8 geotext tests
 
 test:
-	python setup.py test
+	python setup.py pytest
 
 test-all:
 	tox

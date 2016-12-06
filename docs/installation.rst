@@ -4,9 +4,4 @@ Installation
 
 At the command line::
 
-    $ easy_install geotext
-
-Or, if you have virtualenvwrapper installed::
-
-    $ mkvirtualenv geotext
-    $ pip install geotext
+    $ pip install git+git://github.com/aikikode/geotext.git@0.1.0

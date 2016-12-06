@@ -42,6 +42,9 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 2.7',
     ],
+    setup_requires=[
+        'pytest-runner',
+    ],
     test_suite='tests',
     tests_require=test_requirements
 )

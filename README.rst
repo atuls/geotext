@@ -15,7 +15,7 @@ Usage
         geo_text = GeoText()
         geo_text.read('London is a great city')
         geo_text.cities
-        # "London"
+        # ["London"]
 
         GeoText().read('New York, Texas, and also China').country_mentions
         # OrderedDict([(u'US', 2), (u'CN', 1)])

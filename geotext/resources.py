@@ -115,6 +115,6 @@ def get_words_counts(phrases_list):
     Set of phrases lengths
     e.g.
     get_words_count(['hello', 'hi']) -> {1,}
-    get_words_count(['hello', 'hi', 'hello, world and all']) -> {1, 3}
+    get_words_count(['hello', 'hi', 'hello, world and all']) -> {1, 4}
     """
     return set(map(len, map(lambda phrase: phrase.split(), phrases_list)))

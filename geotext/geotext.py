@@ -19,7 +19,7 @@ class GeoText(object):
     >>> geo_text = GeoText()
     >>> geo_text.read('London is a great city')
     >>> geo_text.cities
-    "London"
+    ["London"]
 
     >>> GeoText().read('New York, Texas, and also China').country_mentions
     OrderedDict([(u'US', 2), (u'CN', 1)])
@@ -81,9 +81,10 @@ class GeoText(object):
         def capitalize_list(l):
             return map(lambda w: w.title(), l)
 
-        text = ' '.join(re.sub(r'[^\w]+', ' ', text).split())
         if not fuzzy:
+            text = re.sub(r'[^\x00-\x7F]+', ' ', text).strip()
             return capitalize_list(re.findall(GeoText.LOCATION_REGEX, text))
+        text = re.sub(r'[^\w]+', ' ', text).strip()
         candidates = set()
         for location_length in self._location_length:
             text_substring = text
