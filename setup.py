@@ -21,7 +21,7 @@ test_requirements = [
 
 setup(
     name='geotext',
-    version='0.1.0',
+    version='0.1.1',
     description='Geotext extracts country and city mentions from text',
     long_description=readme + '\n\n' + history,
     author='Denis Kovalev (fork from Yaser Martinez Palenzuela version)',
