@@ -12,7 +12,7 @@ readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 requirements = [
-    # TODO: put package requirements here
+    'Unidecode==0.4.20',
 ]
 
 test_requirements = [
@@ -21,15 +21,13 @@ test_requirements = [
 
 setup(
     name='geotext',
-    version='0.1.1',
+    version='0.2.0',
     description='Geotext extracts country and city mentions from text',
     long_description=readme + '\n\n' + history,
     author='Denis Kovalev (fork from Yaser Martinez Palenzuela version)',
     author_email='aikikode@gmail.com',
     url='https://github.com/aikikode/geotext',
-    packages=[
-        'geotext',
-    ],
+    packages=['geotext', ],
     package_dir={'geotext': 'geotext', },
     include_package_data=True,
     package_data={'geotext': ['geotext/data/*.txt', ], },
@@ -42,9 +40,7 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 2.7',
     ],
-    setup_requires=[
-        'pytest-runner',
-    ],
+    setup_requires=['pytest-runner', ],
     test_suite='tests',
     tests_require=test_requirements
 )

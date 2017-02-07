@@ -1,0 +1,4 @@
+LA	Los Angeles
+NY	New York
+NYC	New York
+SF	San Francisco

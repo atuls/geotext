@@ -13,15 +13,25 @@ Usage
         from geotext import GeoText
 
         geo_text = GeoText()
-        geo_text.read('London is a great city')
+        geo_text = GeoText()
+        geo_text.read(
+            "I'm French, but live in NY. "
+            "I like to visit my friends in France from time to time."
+        )
         geo_text.cities
-        # ["London"]
+        # ['New York']
+        geo_text.countries
+        # ['France']
+        geo_text.nationalities
+        # ['French']
+        geo_text.country_mentions
+        # OrderedDict([('FR', 2), ('US', 1)])
 
-        GeoText().read('New York, Texas, and also China').country_mentions
-        # OrderedDict([(u'US', 2), (u'CN', 1)])
-
-        GeoText().read('Voronezh and New York').country_mentions
+        GeoText().read('Voronezh and NY').country_mentions
         # OrderedDict([(u'RU', 1), (u'US', 1)])
+
+        GeoText().read('I live in Izumiōtsu').cities
+        # ['Izumiotsu']
 
         # Take only large cities into account
         GeoText().set_population_limit(1000000).read('Voronezh and New York').country_mentions

@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
+import re
+from collections import namedtuple
+
+from unidecode import unidecode
 
 _ROOT = os.path.abspath(os.path.dirname(__file__))
 
@@ -10,8 +14,10 @@ def get_data_path(path):
 
 COUNTRIES_FILE = get_data_path('countryInfo.txt')
 CITIES_FILE = get_data_path('cities15000.txt')
-CITIES_PATCH_FILE = get_data_path('citypatches.txt')
+CITIES_ABBREVIATIONS_FILE = get_data_path('cities_abbreviations.txt')
 NATIONALITIES_FILE = get_data_path('nationalities.txt')
+
+Place = namedtuple('Place', 'original_name value')
 
 
 def _read_data_file(
@@ -72,13 +78,21 @@ def _read_data_file(
             columns = line.split(sep)
             if filter_method and not filter_method(columns):
                 continue
-            key = columns[usecols[0]].decode(encoding).lower()
+            original_name = replace_non_ascii(
+                columns[usecols[0]].decode(encoding)
+            )
             # 'London City' -> 'London'
-            suffix_to_remove = ' city'
-            if key.endswith(suffix_to_remove):
-                key = key[:-len(suffix_to_remove)]
+            original_name = re.sub(
+                ' city$', '', original_name, flags=re.IGNORECASE
+            )
+            key = original_name.lower()
+            # Remove dots and strip all non-ascii:
+            # ("Washington, D.C." -> "Washington DC")
+            key = re.sub(r'[,:;\'\" ]+', ' ', re.sub(r'\.', '', key)).strip()
 
-            value = columns[usecols[1]].decode(encoding).rstrip('\n')
+            value = replace_non_ascii(
+                columns[usecols[1]].decode(encoding).rstrip('\n')
+            )
             if population_field_num is not None:
                 population = int(
                     columns[population_field_num].decode(encoding)
@@ -86,7 +100,7 @@ def _read_data_file(
                 if key in d and location_population[key] > population:
                     continue
                 location_population[key] = population
-            d[key] = value
+            d[key] = Place(original_name, value)
     return d
 
 
@@ -110,6 +124,10 @@ def get_cities_data(min_population=0):
     return cities
 
 
+def get_cities_abbreviations_data():
+    return _read_data_file(CITIES_ABBREVIATIONS_FILE)
+
+
 def get_words_counts(phrases_list):
     """
     Set of phrases lengths
@@ -118,3 +136,9 @@ def get_words_counts(phrases_list):
     get_words_count(['hello', 'hi', 'hello, world and all']) -> {1, 4}
     """
     return set(map(len, map(lambda phrase: phrase.split(), phrases_list)))
+
+
+def replace_non_ascii(text):
+    if type(text) == unicode:
+        return unidecode(text)
+    return unidecode(unicode(text, encoding='utf-8'))
