@@ -36,7 +36,10 @@ class GeoText(object):
 
     def _update_code_to_country(self):
         self.code_to_country = dict(
-            zip(self._index.countries.values(), self._index.countries.keys())
+            zip(
+                map(lambda place: place.value, self._index.countries.values()),
+                self._index.countries.keys()
+            )
         )
 
     def set_population_limit(self, min_population):
