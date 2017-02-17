@@ -3,181 +3,181 @@
 #  Extracted from http://en.wikipedia.org/wiki/Lists_of_people_by_nationality   #
 #                                                                               #
 #################################################################################
-Afghan:AF
-Albanian:AL
-Algerian:DZ
-American:US
-Andorran:AD
-Angolan:AO
-Argentine:AR
-Argentinian:AR
-Armenian:AM
-Aruban:AW
-Australian:AU
-Austrian:AT
-Azeri:AZ
-Bahamian:BS
-Bahraini:BH
-Bangladeshi:BD
-Barbadian:BB
-Belarusian:BY
-Belgian:BE
-Belizean:BZ
-Bermudian:BM
-Bosniak:BA
-Bosnian:BA
-Brasilian:BR
-Brazilian:BR
-Breton:GB
-British:GB
-British Virgin Islander:VG
-Bulgarian:BG
-Macedonian:MK
-Bulgarian:BG
-Burkinabè:BF
-Burundian:BI
-Cambodian:KH
-Cameroonian:CM
-Canadian:CA
-Catalan:ES
-Cape Verdean:CV
-Chadian:TD
-Chilean:CL
-Chinese:CN
-Comorian:KM
-Congolese:CG
-Croatian:HR
-Cuban:CU
-Cypriot:CY
-Czech:CZ
-Dane:DK
-Dominican:DM
-Dominican:DO
-Dutch:NL
-East Timorese:TL
-Ecuadorian:EC
-Egyptian:EG
-Emirati:AE
-English:GB
-Eritrean:ER
-Estonian:EE
-Ethiopian:ET
-Faroese:FO
-Finn:FI
-Finnish:FI
-Swedish:SE
-Fijian:FJ
-Filipino:PH
-French:FR
-Georgian:GE
-German:DE
-Ghanaian:GH
-Gibraltar:GI
-Greek:GR
-Grenadian:GD
-Guatemalan:GT
-Guianese:GF
-Guinean:GN
-Guinea-Bissau:GW
-Guyanese:GY
-Haitian:HT
-Honduran:HN
-Hong Kong:HK
-Hungarian:HU
-Icelander:IS
-Indian:IN
-Indonesian:ID
-Iranian:IR
-Irish:IE
-Israeli:IL
-Italian:IT
-Jamaican:JM
-Japanese:JP
-Jordanian:JO
-Kazakh:KZ
-Kenyan:KE
-Korean:KR
-Kuwaiti:KW
-Lao:LA
-Latvian:LV
-Lebanese:LB
-Liberian:LR
-Libyan:LY
-Liechtensteiner:LI
-Lithuanian:LT
-Luxembourger:LU
-Macedonian:MK
-Malaysian:MY
-Malawian:MW
-Maldivian:MV
-Malian:ML
-Maltese:MT
-Manx:IM
-Mauritian:MR
-Mexican:MX
-Moldovan:MD
-Moroccan:MA
-Mongolian:MN
-Montenegrin:ME
-Namibian:NA
-Nepalese:NP
-New Zealander:NZ
-Nicaraguan:NI
-Nigerien:NE
-Nigerian:NG
-Norwegian:NO
-Pakistani:PK
-Palauan:PW
-Palestinian:PS
-Panamanian:PA
-Papua New Guinean:PG
-Paraguayan:PY
-Peruvian:PE
-Pole:PL
-Portuguese:PT
-Puerto Rican:PR
-Quebecer:CA
-Réunionnai:RE
-Romanian:RO
-Russian:RU
-Rwandan:RW
-Salvadoran:SV
-São Tomé and Príncipe:ST
-Saudi:SA
-Senegalese:SN
-Serb:RS
-Sierra Leonean:SL
-Singaporean:SG
-Slovak:SK
-Slovene:SI
-Somali:SO
-South African:ZA
-South Korean:KR
-Spanish:ES
-Sri Lankan:LK
-St Lucian:LC
-Sudanese:SD
-Surinamese:SR
-Swedish:SE
-Swiss:SZ
-Syrian:SY
-Taiwanese:TW
-Tanzanian:TZ
-Thai:TW
-Tobagonian:TT
-Trinidadian:TT
-Tunisian:TN
-Turkish:TR
-Turk:TR
-Tuvaluan:TW
-Ugandan:UG
-Ukrainian:UA
-Uruguayan:UY
-Uzbek:UZ
-Vanuatuan:VU
-Venezuelan:VE
-Vietnamese:VN
-Welsh:GB
-Yemeni:YE
-Zambian:ZM
-Zimbabwean:ZW
+Afghan	AF
+Albanian	AL
+Algerian	DZ
+American	US
+Andorran	AD
+Angolan	AO
+Argentine	AR
+Argentinian	AR
+Armenian	AM
+Aruban	AW
+Australian	AU
+Austrian	AT
+Azeri	AZ
+Bahamian	BS
+Bahraini	BH
+Bangladeshi	BD
+Barbadian	BB
+Belarusian	BY
+Belgian	BE
+Belizean	BZ
+Bermudian	BM
+Bosniak	BA
+Bosnian	BA
+Brasilian	BR
+Brazilian	BR
+Breton	GB
+British	GB
+British Virgin Islander	VG
+Bulgarian	BG
+Macedonian	MK
+Bulgarian	BG
+Burkinabè	BF
+Burundian	BI
+Cambodian	KH
+Cameroonian	CM
+Canadian	CA
+Catalan	ES
+Cape Verdean	CV
+Chadian	TD
+Chilean	CL
+Chinese	CN
+Comorian	KM
+Congolese	CG
+Croatian	HR
+Cuban	CU
+Cypriot	CY
+Czech	CZ
+Dane	DK
+Dominican	DM
+Dominican	DO
+Dutch	NL
+East Timorese	TL
+Ecuadorian	EC
+Egyptian	EG
+Emirati	AE
+English	GB
+Eritrean	ER
+Estonian	EE
+Ethiopian	ET
+Faroese	FO
+Finn	FI
+Finnish	FI
+Swedish	SE
+Fijian	FJ
+Filipino	PH
+French	FR
+Georgian	GE
+German	DE
+Ghanaian	GH
+Gibraltar	GI
+Greek	GR
+Grenadian	GD
+Guatemalan	GT
+Guianese	GF
+Guinean	GN
+Guinea-Bissau	GW
+Guyanese	GY
+Haitian	HT
+Honduran	HN
+Hong Kong	HK
+Hungarian	HU
+Icelander	IS
+Indian	IN
+Indonesian	ID
+Iranian	IR
+Irish	IE
+Israeli	IL
+Italian	IT
+Jamaican	JM
+Japanese	JP
+Jordanian	JO
+Kazakh	KZ
+Kenyan	KE
+Korean	KR
+Kuwaiti	KW
+Lao	LA
+Latvian	LV
+Lebanese	LB
+Liberian	LR
+Libyan	LY
+Liechtensteiner	LI
+Lithuanian	LT
+Luxembourger	LU
+Macedonian	MK
+Malaysian	MY
+Malawian	MW
+Maldivian	MV
+Malian	ML
+Maltese	MT
+Manx	IM
+Mauritian	MR
+Mexican	MX
+Moldovan	MD
+Moroccan	MA
+Mongolian	MN
+Montenegrin	ME
+Namibian	NA
+Nepalese	NP
+New Zealander	NZ
+Nicaraguan	NI
+Nigerien	NE
+Nigerian	NG
+Norwegian	NO
+Pakistani	PK
+Palauan	PW
+Palestinian	PS
+Panamanian	PA
+Papua New Guinean	PG
+Paraguayan	PY
+Peruvian	PE
+Pole	PL
+Portuguese	PT
+Puerto Rican	PR
+Quebecer	CA
+Réunionnai	RE
+Romanian	RO
+Russian	RU
+Rwandan	RW
+Salvadoran	SV
+São Tomé and Príncipe	ST
+Saudi	SA
+Senegalese	SN
+Serb	RS
+Sierra Leonean	SL
+Singaporean	SG
+Slovak	SK
+Slovene	SI
+Somali	SO
+South African	ZA
+South Korean	KR
+Spanish	ES
+Sri Lankan	LK
+St Lucian	LC
+Sudanese	SD
+Surinamese	SR
+Swedish	SE
+Swiss	SZ
+Syrian	SY
+Taiwanese	TW
+Tanzanian	TZ
+Thai	TW
+Tobagonian	TT
+Trinidadian	TT
+Tunisian	TN
+Turkish	TR
+Turk	TR
+Tuvaluan	TW
+Ugandan	UG
+Ukrainian	UA
+Uruguayan	UY
+Uzbek	UZ
+Vanuatuan	VU
+Venezuelan	VE
+Vietnamese	VN
+Welsh	GB
+Yemeni	YE
+Zambian	ZM
+Zimbabwean	ZW

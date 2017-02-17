@@ -3,4 +3,4 @@ from geotext import GeoText
 
 __author__ = 'Denis Kovalev'
 __email__ = 'aikikode@gmail.com'
-__version__ = '0.2.0'
+__version__ = '0.3.0'

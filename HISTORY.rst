@@ -3,6 +3,15 @@
 History
 -------
 
+0.3.0 (2017-02-17)
+------------------
+
+* Use places objects as results
+* Handle only upper-case abbreviations
+* Add countries abbreviations
+* Add states database
+
+
 0.2.0 (2017-02-08)
 ------------------
 

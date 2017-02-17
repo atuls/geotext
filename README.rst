@@ -13,7 +13,6 @@ Usage
         from geotext import GeoText
 
         geo_text = GeoText()
-        geo_text = GeoText()
         geo_text.read(
             "I'm French, but live in NY. "
             "I like to visit my friends in France from time to time."

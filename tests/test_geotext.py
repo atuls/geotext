@@ -1,95 +1,110 @@
 # -*- coding: utf-8 -*-
-from collections import OrderedDict
-
 import pytest
 
 from geotext import GeoText
-from geotext.resources import get_words_counts
+from geotext.text_utils import get_words_counts
 
 
 @pytest.mark.parametrize(
     (
         'fuzzy,limit,skip_nationalities,text,'
-        'cities,countries,nationalities,country_mentions'
+        'cities,countries,states,country_mentions'
     ),
     [
         (
             False, 0, False, 'London is a great city', ['London', ], [], [],
-            OrderedDict([(u'GB', 1,), ]),
+            [(u'GB', 1,), ],
         ),
         (
             False, 0, False, 'Voronezh and New York',
             ['Voronezh', 'New York', ], [], [],
-            OrderedDict([(u'RU', 1,), (u'US', 1,), ]),
+            [(u'RU', 1,), (u'US', 1,), ],
         ),
         (
             False, 0, False,
             "I am from Washington. So I'm American, although I live in "
             "Manchester.",
-            ['Washington', 'Manchester', ], [], ['American', ],
-            OrderedDict([(u'GB', 2,), (u'US', 1,), ]),
+            ['Washington', 'Manchester', ], ['United States', ], [],
+            [(u'GB', 2,), (u'US', 1,), ],
         ),
         (
             False, 0, True,
             "I am from Washington. So I'm American, although I live in "
             "Manchester.",
             ['Washington', 'Manchester', ], [], [],
-            OrderedDict([(u'GB', 2,), ]),
+            [(u'GB', 2,), ],
         ),
         (
             False, 0, False, 'IT consultant from Germany', [], ['Germany', ],
-            [], OrderedDict([(u'DE', 1,), ]),
+            [], [(u'DE', 1,), ],
         ),
-        (False, 0, False, 'germany london', [], [], [], OrderedDict(),),
+        (False, 0, False, 'germany london', [], [], [], [],),
         (
             True, 0, False, 'germany london', ['London', ], ['Germany', ], [],
-            OrderedDict([(u'DE', 1,), (u'GB', 1,), ]),
+            [(u'GB', 1,), (u'DE', 1,), ],
         ),
         (
             True, 0, False,
             'name of the munich writer, singer and photographer',
             ['Munich', 'Of', ], [], [],
-            OrderedDict([(u'DE', 1,), (u'TR', 1,), ]),
+            [(u'DE', 1,), (u'TR', 1,), ],
         ),
         (
             True, 500000, False,
             'name of the munich writer, singer and photographer',
-            ['Munich', ], [], [], OrderedDict([(u'DE', 1,), ]),
+            ['Munich', ], [], [], [(u'DE', 1,), ],
         ),
         (
             True, 0, False, 'Voronezh and NY', ['Voronezh', 'New York', ], [],
-            [], OrderedDict([(u'RU', 1,), (u'US', 1,), ]),
+            [], [(u'RU', 1,), (u'US', 1,), ],
         ),
         (
             False, 0, False, 'I live in Washington DC', ['Washington, D.C.', ],
-            [], [], OrderedDict([(u'US', 1,), ]),
+            [], [], [(u'US', 1,), ],
         ),
         (
-            False, 0, False, 'I live in Washington D.C.', [], [], [],
-            OrderedDict(),
+            False, 0, False, 'I live in Washington D.C.', [], [], [], []
         ),
         (
             True, 0, False, 'I live in Washington D.C. but used to live in NY',
-            ['Washington, D.C.', 'New York', ], [], [],
-            OrderedDict([(u'US', 2,), ]),
+            ['Washington, D.C.', 'New York', ], [], ['Washington, D.C.', ],
+            [(u'US', 2,), ],
         ),
         (
             True, 0, False, 'I am from Izumiōtsu but lived in Воронеж',
             ['Izumiotsu', 'Voronezh', ], [], [],
-            OrderedDict([(u'RU', 1,), (u'JP', 1,), ]),
+            [(u'RU', 1,), (u'JP', 1,), ],
+        ),
+        (
+            False, 0, False, 'It is sunny in California', [], [],
+            ['California', ], [(u'US', 1,), ],
+        ),
+        (
+            True, 0, False, 'It is sunny in LA CA', ['Los Angeles'], [],
+            ['California', ], [(u'US', 1,), ],
+        ),
+        (
+            False, 0, False, 'It is sunny in LA CA', [], [], [], [],
         ),
     ]
 )
 def test_read(
-    fuzzy, limit, skip_nationalities, text, cities, countries, nationalities,
+    fuzzy, limit, skip_nationalities, text, cities, countries, states,
     country_mentions
 ):
-    geo_text = GeoText().set_population_limit(limit)
-    geo_text.read(text, fuzzy=fuzzy, skip_nationalities=skip_nationalities)
-    assert set(geo_text.cities) == set(cities)
-    assert set(geo_text.countries) == set(countries)
-    assert set(geo_text.nationalities) == set(nationalities)
-    assert geo_text.country_mentions == country_mentions
+    geo_text = GeoText()
+    geo_text.read(
+        text, min_population=limit, fuzzy=fuzzy,
+        skip_nationalities=skip_nationalities
+    )
+    assert set(map(lambda c: c.name, geo_text.results.cities)) == set(cities)
+    assert set(map(lambda c: c.name, geo_text.results.states)) == set(states)
+    assert set(map(lambda c: c.name, geo_text.results.countries)) == set(
+        countries
+    )
+    assert {
+       (k._key, v) for k, v in geo_text.get_country_mentions().iteritems()
+    } == set(country_mentions)
 
 
 @pytest.mark.parametrize(
