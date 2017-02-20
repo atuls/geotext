@@ -7,100 +7,95 @@ from geotext.text_utils import get_words_counts
 
 @pytest.mark.parametrize(
     (
-        'fuzzy,limit,skip_nationalities,text,'
-        'cities,countries,states,country_mentions'
+        'limit,skip_nationalities,text,'
+        'cities,countries,nationalities,states,country_mentions'
     ),
     [
         (
-            False, 0, False, 'London is a great city', ['London', ], [], [],
+            0, False, 'London is a great city', ['London', ], [], [], [],
             [(u'GB', 1,), ],
         ),
         (
-            False, 0, False, 'Voronezh and New York',
-            ['Voronezh', 'New York', ], [], [],
+            0, False, 'Voronezh and New York',
+            ['Voronezh', 'New York', ], [], [], [],
             [(u'RU', 1,), (u'US', 1,), ],
         ),
         (
-            False, 0, False,
+            0, False,
             "I am from Washington. So I'm American, although I live in "
             "Manchester.",
-            ['Washington', 'Manchester', ], ['United States', ], [],
+            ['Washington', 'Manchester', ], [], ['United States', ], [],
             [(u'GB', 2,), (u'US', 1,), ],
         ),
         (
-            False, 0, True,
+            0, True,
             "I am from Washington. So I'm American, although I live in "
             "Manchester.",
-            ['Washington', 'Manchester', ], [], [],
+            ['Washington', 'Manchester', ], [], [], [],
             [(u'GB', 2,), ],
         ),
         (
-            False, 0, False, 'IT consultant from Germany', [], ['Germany', ],
-            [], [(u'DE', 1,), ],
+            0, False, 'IT consultant from Germany', [], ['Germany', 'Italy', ],
+            [], [], [(u'DE', 1,), (u'IT', 1,)],
         ),
-        (False, 0, False, 'germany london', [], [], [], [],),
         (
-            True, 0, False, 'germany london', ['London', ], ['Germany', ], [],
+            0, False, 'germany london', ['London', ], ['Germany', ], [], [],
             [(u'GB', 1,), (u'DE', 1,), ],
         ),
         (
-            True, 0, False,
+            0, False,
             'name of the munich writer, singer and photographer',
-            ['Munich', 'Of', ], [], [],
+            ['Munich', 'Of', ], [], [], [],
             [(u'DE', 1,), (u'TR', 1,), ],
         ),
         (
-            True, 500000, False,
+            500000, False,
             'name of the munich writer, singer and photographer',
-            ['Munich', ], [], [], [(u'DE', 1,), ],
+            ['Munich', ], [], [], [], [(u'DE', 1,), ],
         ),
         (
-            True, 0, False, 'Voronezh and NY', ['Voronezh', 'New York', ], [],
-            [], [(u'RU', 1,), (u'US', 1,), ],
+            0, False, 'Voronezh and NY', ['Voronezh', 'New York', ], [],
+            [], [], [(u'RU', 1,), (u'US', 1,), ],
         ),
         (
-            False, 0, False, 'I live in Washington DC', ['Washington, D.C.', ],
-            [], [], [(u'US', 1,), ],
+            0, False, 'I live in Washington DC', ['Washington, D.C.', ],
+            [], [], [], [(u'US', 1,), ],
         ),
         (
-            False, 0, False, 'I live in Washington D.C.', [], [], [], []
-        ),
-        (
-            True, 0, False, 'I live in Washington D.C. but used to live in NY',
-            ['Washington, D.C.', 'New York', ], [], ['Washington, D.C.', ],
+            0, False, 'I live in Washington D.C. but used to live in NY',
+            ['Washington, D.C.', 'New York', ], [], [], [],
             [(u'US', 2,), ],
         ),
         (
-            True, 0, False, 'I am from Izumiōtsu but lived in Воронеж',
-            ['Izumiotsu', 'Voronezh', ], [], [],
+            0, False, 'I am from Izumiōtsu but lived in Воронеж',
+            ['Izumiotsu', 'Voronezh', ], [], [], [],
             [(u'RU', 1,), (u'JP', 1,), ],
         ),
         (
-            False, 0, False, 'It is sunny in California', [], [],
+            0, False, 'It is sunny in California', [], [], [],
             ['California', ], [(u'US', 1,), ],
         ),
         (
-            True, 0, False, 'It is sunny in LA CA', ['Los Angeles'], [],
+            0, False, 'It is sunny in LA CA', ['Los Angeles'], [], [],
             ['California', ], [(u'US', 1,), ],
-        ),
-        (
-            False, 0, False, 'It is sunny in LA CA', [], [], [], [],
         ),
     ]
 )
 def test_read(
-    fuzzy, limit, skip_nationalities, text, cities, countries, states,
+    limit, skip_nationalities, text, cities, countries, nationalities, states,
     country_mentions
 ):
     geo_text = GeoText()
     geo_text.read(
-        text, min_population=limit, fuzzy=fuzzy,
-        skip_nationalities=skip_nationalities
+        text, min_population=limit, skip_nationalities=skip_nationalities
     )
     assert set(map(lambda c: c.name, geo_text.results.cities)) == set(cities)
     assert set(map(lambda c: c.name, geo_text.results.states)) == set(states)
     assert set(map(lambda c: c.name, geo_text.results.countries)) == set(
         countries
+    )
+    assert set(map(lambda c: c.name, geo_text.results.nationalities)) == set(
+        nationalities
     )
     assert {
        (k._key, v) for k, v in geo_text.get_country_mentions().iteritems()

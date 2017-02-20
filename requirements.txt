@@ -1,1 +1,2 @@
+Unidecode==0.4.20
 wheel==0.23.0

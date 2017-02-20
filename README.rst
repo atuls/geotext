@@ -2,7 +2,23 @@
 geotext
 ===============================
 
-Geotext extracts country and city mentions from text
+GeoText extracts countries, nationalities, states and cities mentions from text.
+
+It gets a block of text as input and produces a tuple of `Place` objects as a result respresenting detected countries, nationalities, states and cities.
+
+Each `Place` object has the following fields:
+    `name`: name of the palce, e.g. 'London', 'New York' for cities; 'France', 'Germany' for countries, etc.
+    `population`: number of people living in this place, available only for cities and countries
+
+Also there're additional place-specific fields.
+`City` has:
+    `state`: (optional, None by default) a `State` object representing region of the city, e.g. "State: California, United States"
+    `country`: a `Country` (`Place`) object of this city
+
+`State` has:
+    `country`: a `Country` (`Place`) object of this state/region
+
+See usage below for details.
 
 * Free software: MIT license
 
@@ -17,24 +33,39 @@ Usage
             "I'm French, but live in NY. "
             "I like to visit my friends in France from time to time."
         )
-        geo_text.cities
+        geo_text.results
+        # Results(
+        #     countries=(Country: France,),
+        #     nationalities=(Country: France,),
+        #     states=(),
+        #     cities=(City: New York, New York, United States,)
+        # )
+        [city.name for city in geo_text.results.cities]
         # ['New York']
-        geo_text.countries
+        city = geo_text.results.cities[0]
+        city.__dict__
+        # {'_key': 'London',
+        #  '_search_field': 'london',
+        #  'country': Country: United Kingdom,
+        #  'name': 'London',
+        #  'population': 7556900,
+        #  'state': State: England, United Kingdom}
+        [country.name for country in geo_text.results.countries]
         # ['France']
-        geo_text.nationalities
-        # ['French']
-        geo_text.country_mentions
-        # OrderedDict([('FR', 2), ('US', 1)])
+        geo_text.get_country_mentions()
+        # OrderedDict([(Country: France, 2), (Country: United States, 1)])
 
-        GeoText().read('Voronezh and NY').country_mentions
-        # OrderedDict([(u'RU', 1), (u'US', 1)])
+        GeoText('Voronezh and NY').get_country_mentions()
+        # OrderedDict([(Country: Russia, 1), (Country: United States, 1)])
 
-        GeoText().read('I live in Izumiōtsu').cities
-        # ['Izumiotsu']
+        GeoText('I live in Izumiōtsu').results.cities
+        # (City: Izumiotsu, Osaka, Japan,)
 
         # Take only large cities into account
-        GeoText().set_population_limit(1000000).read('Voronezh and New York').country_mentions
-        # OrderedDict([(u'US', 1)])
+        GeoText().read(
+            'Voronezh and New York', min_population=500000
+        ).get_country_mentions()
+        # OrderedDict([(Country: United States, 1), (Country: Russia, 1)])
 
 Features
 --------

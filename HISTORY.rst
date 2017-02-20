@@ -3,13 +3,14 @@
 History
 -------
 
-0.3.0 (2017-02-17)
+0.3.0 (2017-02-20)
 ------------------
 
 * Use places objects as results
-* Handle only upper-case abbreviations
-* Add countries abbreviations
+* New candidate detection algorithm
 * Add states database
+* Add countries abbreviations
+* Handle only upper-case abbreviations
 
 
 0.2.0 (2017-02-08)
