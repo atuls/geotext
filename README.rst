@@ -7,16 +7,24 @@ GeoText extracts countries, nationalities, states and cities mentions from text.
 It gets a block of text as input and produces a tuple of `Place` objects as a result respresenting detected countries, nationalities, states and cities.
 
 Each `Place` object has the following fields:
-    `name`: name of the palce, e.g. 'London', 'New York' for cities; 'France', 'Germany' for countries, etc.
-    `population`: number of people living in this place, available only for cities and countries
+
+- `name`: name of the palce, e.g. 'London', 'New York' for cities; 'France', 'Germany' for countries, etc.
+
+- `population`: number of people living in this place, available only for cities and countries
 
 Also there're additional place-specific fields.
+
 `City` has:
-    `state`: (optional, None by default) a `State` object representing region of the city, e.g. "State: California, United States"
-    `country`: a `Country` (`Place`) object of this city
+
+- `state`: (optional, None by default) a `State` object representing region of the city, e.g. "State: California, United States"
+
+-  `country`: a `Country` (`Place`) object of this city
 
 `State` has:
-    `country`: a `Country` (`Place`) object of this state/region
+
+- `country`: a `Country` (`Place`) object of this state/region
+
+`Nationality` object is the same as `Country` object ans represents countries mentioned by nationality.
 
 See usage below for details.
 
@@ -63,9 +71,9 @@ Usage
 
         # Take only large cities into account
         GeoText().read(
-            'Voronezh and New York', min_population=500000
+            'Voronezh and New York', min_population=1000000
         ).get_country_mentions()
-        # OrderedDict([(Country: United States, 1), (Country: Russia, 1)])
+        # OrderedDict([(Country: United States, 1)])
 
 Features
 --------

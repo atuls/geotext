@@ -41,6 +41,6 @@ To use geotext in a project::
 
     # Take only large cities into account
     GeoText().read(
-        'Voronezh and New York', min_population=500000
+        'Voronezh and New York', min_population=1000000
     ).get_country_mentions()
-    # OrderedDict([(Country: United States, 1), (Country: Russia, 1)])
+    # OrderedDict([(Country: United States, 1)])

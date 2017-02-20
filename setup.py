@@ -27,7 +27,7 @@ setup(
     author='Denis Kovalev (fork from Yaser Martinez Palenzuela version)',
     author_email='aikikode@gmail.com',
     url='https://github.com/aikikode/geotext',
-    packages=['geotext', ],
+    packages=['geotext', 'geotext.models', 'geotext.tasks', ],
     package_dir={'geotext': 'geotext', },
     include_package_data=True,
     package_data={'geotext': ['geotext/data/*.txt', ], },
