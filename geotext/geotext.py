@@ -63,7 +63,7 @@ class GeoText(object):
             country_db, state_db, city_db, nationality_db,
             city_abbreviation_db, country_abbreviation_db
         )
-        self._location_length = self._get_locations_length()
+        self._max_location_length = self._get_locations_length()[0]
 
     def _get_locations_length(self):
         words_counts = set()
@@ -81,7 +81,9 @@ class GeoText(object):
         # TODO: improve this, since DB has unicode symbols in cities
         text = re.sub(r'[^\w]+', ' ', text).strip()
 
-        return CandidateDB(text).get_candidates()
+        return CandidateDB(
+            text, max_phrase_len=self._max_location_length
+        ).get_candidates()
 
     def read(self, text, min_population=0, skip_nationalities=False):
         self.text = text
@@ -147,7 +149,7 @@ class GeoText(object):
                 city_abbrev_match.place.population >= min_population
             ):
                     cities.add(city_abbrev_match.place)
-                    candidate.is_location = True
+                    candidate.mark_as_location()
                     continue
 
             # 2
@@ -159,7 +161,7 @@ class GeoText(object):
                 state_match.country.population >= min_population
             ):
                 states.add(state_match)
-                candidate.is_location = True
+                candidate.mark_as_location()
                 continue
 
             # 3
@@ -169,7 +171,7 @@ class GeoText(object):
             )
             if country_match and country_match.population >= min_population:
                 countries.add(country_match)
-                candidate.is_location = True
+                candidate.mark_as_location()
                 continue
 
             # 4
@@ -182,7 +184,7 @@ class GeoText(object):
                     nationality_match.place.population >= min_population
                 ):
                     nationalities.add(nationality_match.place)
-                    candidate.is_location = True
+                    candidate.mark_as_location()
                     continue
 
             # 5
@@ -194,14 +196,14 @@ class GeoText(object):
                 country_abbrev_match.place.population >= min_population
             ):
                 countries.add(country_abbrev_match.place)
-                candidate.is_location = True
+                candidate.mark_as_location()
                 continue
 
             # 6
             city_match = self._geodb.city_db.search(candidate.text.lower())
             if city_match and city_match.population >= min_population:
                 cities.add(city_match)
-                candidate.is_location = True
+                candidate.mark_as_location()
                 continue
 
             # 7
@@ -213,7 +215,7 @@ class GeoText(object):
                 state_match.country.population >= min_population
             ):
                 states.add(state_match)
-                candidate.is_location = True
+                candidate.mark_as_location()
                 continue
         return (
             tuple(countries), tuple(nationalities), tuple(states),

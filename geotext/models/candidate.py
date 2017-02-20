@@ -8,22 +8,27 @@ class Candidate(object):
     def __init__(self, text):
         self.text = text
         self.parents = set()
-        self.is_location = False  # whether this candidate is a valid location
+        self.children = set()
+        # Whether this candidate is a valid location
+        self.is_location = False
+        # Whether any of candidate parent and their parents and so on is
+        # a valid location
+        self.has_parent_location = False
 
     def add_parent(self, parent):
         self.parents.add(parent)
+        parent.children.add(self)
 
-    @property
-    def has_parent_location(self):
-        """
-        Whether any of candidate parent and their parents and so on is
-        a valid location
-        :return:
-        """
-        for parent in self.parents:
-            if parent.is_location or parent.has_parent_location:
-                return True
-        return False
+    def get_all_children(self):
+        result = self.children
+        for child in self.children:
+            result |= child.get_all_children()
+        return result
+
+    def mark_as_location(self):
+        self.is_location = True
+        for child in self.get_all_children():
+            child.has_parent_location = True
 
     def __repr__(self):
         return '{}: "{}"'.format(type(self).__name__, self.text)
