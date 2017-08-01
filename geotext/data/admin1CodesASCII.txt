@@ -36,7 +36,7 @@ US.NM	New Mexico	New Mexico	5481136
 US.NV	Nevada	Nevada	5509151
 US.UT	Utah	Utah	5549030
 US.AZ	Arizona	Arizona	5551752
-US.ID	Idaho	Idaho	5596512
+US.IDAHO	Idaho	Idaho	5596512
 US.MT	Montana	Montana	5667009
 US.ND	North Dakota	North Dakota	5690763
 US.OR	Oregon	Oregon	5744337
