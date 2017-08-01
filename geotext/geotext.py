@@ -208,7 +208,7 @@ class GeoText(object):
 
             # 7
             state_match = (
-                self._geodb.state_db.search(candidate.text.lower())
+                self._geodb.state_db.search('US.{}'.format(candidate.text.lower()))
             )
             if (
                 state_match and
