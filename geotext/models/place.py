@@ -28,9 +28,10 @@ class PlaceDB(object):
     """
     Geographic place database
     """
-    def __init__(self):
+    def __init__(self, ignore_abbreviations=False):
         self._objects_by_key = dict()
         self._objects_by_text = dict()
+        self.ignore_abbreviations = ignore_abbreviations
 
     def add(self, place):
         self._objects_by_key[place._key] = place
@@ -38,9 +39,12 @@ class PlaceDB(object):
         self._objects_by_text[place._search_field] = place
 
     def search(self, text):
-        return self._objects_by_key.get(text) or self._objects_by_text.get(
-            text
-        )
+        if not self.ignore_abbreviations:
+            return self._objects_by_key.get(text) or self._objects_by_text.get(
+                text
+            )
+        else:
+            return self._objects_by_text.get(text)
 
     def all(self):
         for item in self._objects_by_key.values():

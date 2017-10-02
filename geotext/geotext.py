@@ -10,6 +10,25 @@ from tasks.db_tasks import (
 )
 from text_utils import get_words_counts, replace_non_ascii
 
+def load_geotext_model():
+    GeoDB = namedtuple(
+        'GeoDB',
+        'country_db,state_db,city_db,nationality_db,city_abbreviation_db,'
+        'country_abbreviation_db'
+    )
+    country_db = create_country_db(ignore_abbreviations=True)
+    state_db = create_state_db(country_db)
+    city_db = create_city_db(state_db, country_db)
+    nationality_db = create_nationality_db(country_db)
+    city_abbreviation_db = create_city_abbreviations_db(city_db)
+    country_abbreviation_db = create_country_abbreviations_db(country_db)
+
+    db = GeoDB(
+        country_db, state_db, city_db, nationality_db,
+        city_abbreviation_db, country_abbreviation_db
+    )
+    return db
+
 
 class GeoText(object):
     """
@@ -35,35 +54,19 @@ class GeoText(object):
     OrderedDict([(Country: United States, 2), (Country: China, 1)])
     """
     LOCATION_REGEX = r"[A-Z]+[a-z]*(?:[ '-][A-Z]+[a-z]*)*"
-    GeoDB = namedtuple(
-        'GeoDB',
-        'country_db,state_db,city_db,nationality_db,city_abbreviation_db,'
-        'country_abbreviation_db'
-    )
+
     Results = namedtuple('Results', 'countries,nationalities,states,cities')
 
-    def __init__(self, text=''):
+    def __init__(self, database=None, text='',):
         self.results = GeoText.Results((), (), (), ())
         self.text = text
-        self._build_geodb()
+        if database:
+            self._geodb = database
+        else:
+            self._geodb = load_geotext_model()
+        self._max_location_length = self._get_locations_length()[0]
         if text:
             self.read(text)
-
-    def _build_geodb(self):
-        """
-        Load information from the data directory
-        """
-        country_db = create_country_db()
-        state_db = create_state_db(country_db)
-        city_db = create_city_db(state_db, country_db)
-        nationality_db = create_nationality_db(country_db)
-        city_abbreviation_db = create_city_abbreviations_db(city_db)
-        country_abbreviation_db = create_country_abbreviations_db(country_db)
-        self._geodb = GeoText.GeoDB(
-            country_db, state_db, city_db, nationality_db,
-            city_abbreviation_db, country_abbreviation_db
-        )
-        self._max_location_length = self._get_locations_length()[0]
 
     def _get_locations_length(self):
         words_counts = set()

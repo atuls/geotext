@@ -102,8 +102,8 @@ def _read_data_file(
     return d.values()
 
 
-def create_country_db():
-    country_db = PlaceDB()
+def create_country_db(ignore_abbreviations=False):
+    country_db = PlaceDB(ignore_abbreviations)
     for (
         country_name, country_code, population,
     ) in _read_data_file(COUNTRIES_FILE, usecols=[4, 0, 7]):
