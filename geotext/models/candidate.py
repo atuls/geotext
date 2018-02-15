@@ -20,7 +20,7 @@ class Candidate(object):
         parent.children.add(self)
 
     def get_all_children(self):
-        result = self.children
+        result = self.children.copy()
         for child in self.children:
             result |= child.get_all_children()
         return result
